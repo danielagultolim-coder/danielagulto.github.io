@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel Agulto — UX/UI Designer &amp; Web Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --counter: #23201a;
+    --paper: #f6f1e4;
+    --paper-shade: #e9e2cd;
+    --ink: #211d16;
+    --ink-soft: #86806c;
+    --stamp: #a8362c;
+    --pos-green: #3c7a58;
+    --rule: #d8d0b8;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--counter);
+    background-image:
+      radial-gradient(ellipse at top, #322d24 0%, #23201a 60%);
+    font-family:'JetBrains Mono', monospace;
+    color:var(--ink);
+    display:flex;
+    justify-content:center;
+    padding:48px 16px 90px;
+    min-height:100vh;
+  }
+
+  .slot{
+    position:fixed;
+    top:0; left:0; right:0;
+    height:14px;
+    background:#141210;
+    box-shadow:0 3px 10px rgba(0,0,0,.5);
+    z-index:20;
+  }
+  .slot::after{
+    content:"";
+    position:absolute; left:50%; top:4px;
+    transform:translateX(-50%);
+    width:120px; height:6px;
+    background:#000;
+    border-radius:3px;
+  }
+
+  .receipt{
+    width:100%;
+    max-width:440px;
+    background:var(--paper);
+    box-shadow:0 30px 60px rgba(0,0,0,.45), 0 4px 0 rgba(0,0,0,.05) inset;
+    position:relative;
+    opacity:0;
+    transform:translateY(-160px);
+    animation:print-out 1.1s cubic-bezier(.2,.9,.25,1) .3s forwards;
+  }
+  @keyframes print-out{
+    0%{ opacity:0; transform:translateY(-220px); }
+    60%{ opacity:1; }
+    100%{ opacity:1; transform:translateY(0); }
+  }
+
+  .zig-top, .zig-bot{
+    height:13px;
+    background-color:var(--paper);
+    background-image:
+      linear-gradient(45deg, var(--counter) 25%, transparent 25.5%),
+      linear-gradient(-45deg, var(--counter) 25%, transparent 25.5%);
+    background-size:18px 18px;
+  }
+  .zig-top{ background-position:top; }
+  .zig-bot{ background-position:bottom; }
+
+  .inner{ padding:34px 30px 26px; }
+
+  .line{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .55s ease, transform .55s ease;
+  }
+  .line.show{ opacity:1; transform:translateY(0); }
+
+  .store-name{
+    text-align:center;
+    font-size:23px;
+    font-weight:800;
+    letter-spacing:1px;
+    margin:0 0 4px;
+  }
+  .store-tag{
+    text-align:center;
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:2.5px;
+    color:var(--ink-soft);
+    margin:0 0 18px;
+  }
+  .center-block{ text-align:center; font-size:11.5px; line-height:1.7; color:var(--ink-soft); }
+  .center-block a{ color:var(--pos-green); text-decoration:none; border-bottom:1px dashed var(--pos-green); }
+
+  .rule{
+    border:none;
+    border-top:1.5px dashed var(--rule);
+    margin:18px 0;
+  }
+  .rule.solid{ border-top:2px solid var(--ink); opacity:.85; }
+
+  .meta-row{ display:flex; justify-content:space-between; font-size:11px; color:var(--ink-soft); margin-bottom:2px; }
+
+  h2.section{
+    font-size:12.5px;
+    letter-spacing:2px;
+    font-weight:800;
+    margin:0 0 14px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  h2.section::before{ content:"▸"; color:var(--stamp); }
+
+  .item-row{
+    display:flex; justify-content:space-between; gap:10px;
+    font-size:12.5px; padding:5px 0;
+  }
+  .item-row .name{ font-weight:600; }
+  .item-row .val{ color:var(--ink-soft); text-align:right; white-space:nowrap; }
+
+  .qty{ color:var(--ink-soft); font-size:11px; }
+
+  .case-card{
+    background:var(--paper-shade);
+    border:1.5px dashed var(--ink-soft);
+    padding:16px 16px 14px;
+    margin:14px 0;
+    position:relative;
+  }
+  .case-card h3{
+    margin:0 0 6px;
+    font-size:11.5px;
+    letter-spacing:1.5px;
+    color:var(--stamp);
+  }
+  .case-card p{ margin:0; font-size:12px; line-height:1.6; color:var(--ink); }
+
+  .flow{
+    display:flex; flex-wrap:wrap; gap:6px 4px;
+    font-size:10.5px; font-weight:700; letter-spacing:.4px;
+    margin-top:6px;
+  }
+  .flow span{ background:var(--paper); border:1px solid var(--ink); padding:4px 7px; }
+  .flow .arrow{ border:none; padding:4px 0; color:var(--ink-soft); font-weight:400; }
+
+  .stamp{
+    font-family:'Caveat', cursive;
+    color:var(--stamp);
+    border:3px solid var(--stamp);
+    display:inline-block;
+    padding:2px 14px;
+    font-size:22px;
+    font-weight:700;
+    transform:rotate(-7deg);
+    border-radius:6px;
+    margin-top:10px;
+    opacity:.9;
+  }
+
+  .proj-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:12px;
+    font-size:11.5px;
+    font-weight:700;
+    color:var(--pos-green);
+    text-decoration:none;
+    border:1.5px solid var(--pos-green);
+    padding:7px 12px;
+  }
+  .proj-link:hover{ background:var(--pos-green); color:var(--paper); }
+  .proj-link::before{ content:"↗"; }
+
+  .job{ margin-bottom:14px; }
+  .job .role{ font-weight:800; font-size:12.5px; }
+  .job .org{ font-size:11.5px; color:var(--ink-soft); }
+  .job ul{ margin:6px 0 0; padding-left:16px; }
+  .job li{ font-size:11.5px; line-height:1.6; margin-bottom:3px; }
+
+  .barcode{ display:flex; gap:2px; align-items:flex-end; height:46px; justify-content:center; margin:16px 0 6px; }
+  .barcode div{ background:var(--ink); width:2px; }
+
+  .total-row{ display:flex; justify-content:space-between; font-size:14px; font-weight:800; padding:10px 0; }
+  .thankyou{ text-align:center; font-size:12px; letter-spacing:2px; font-weight:700; margin-top:6px; }
+  .footer-note{ text-align:center; font-size:10px; color:var(--ink-soft); margin-top:6px; line-height:1.7; }
+
+  .cta-row{ display:flex; gap:8px; margin-top:16px; flex-wrap:wrap; justify-content:center; }
+  .cta-row a{ flex:1; min-width:120px; text-align:center; justify-content:center; }
+
+  @media (max-width:480px){
+    .inner{ padding:26px 18px 20px; }
+    .store-name{ font-size:19px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="slot"></div>
+
+<div class="receipt">
+  <div class="zig-top"></div>
+  <div class="inner">
+
+    <div class="line show">
+      <p class="store-name">DANIEL L. AGULTO JR.</p>
+      <p class="store-tag">UX/UI DESIGNER · WEB DEVELOPER</p>
+      <p class="center-block">
+        Madrid, Spain · +34 672 189 733<br>
+        <a href="mailto:danielagultolim@gmail.com">danielagultolim@gmail.com</a>
+      </p>
+    </div>
+
+    <hr class="rule">
+
+    <div class="line">
+      <div class="meta-row"><span>TXN #000247</span><span id="today"></span></div>
+      <div class="meta-row"><span>CASHIER</span><span>DANIEL A.</span></div>
+      <div class="meta-row"><span>STATUS</span><span style="color:var(--pos-green); font-weight:700;">OPEN TO WORK</span></div>
+    </div>
+
+    <hr class="rule solid">
+
+    <!-- SKILLS -->
+    <div class="line">
+      <h2 class="section">SKILLS RUNG UP</h2>
+      <div class="item-row"><span class="name">UI Design</span><span class="val">x1</span></div>
+      <div class="item-row"><span class="name">UX Research &amp; User Flows</span><span class="val">x1</span></div>
+      <div class="item-row"><span class="name">HTML / CSS / JavaScript</span><span class="val">x1</span></div>
+      <div class="item-row"><span class="name">PHP &amp; Databases</span><span class="val">x1</span></div>
+      <div class="item-row"><span class="name">Responsive Design</span><span class="val">x1</span></div>
+      <div class="item-row"><span class="name">Prototyping</span><span class="val">x1</span></div>
+      <div class="item-row"><span class="name">Team Leadership</span><span class="val">x1</span></div>
+      <hr class="rule">
+      <div class="item-row"><span class="name" style="font-weight:800;">SUBTOTAL</span><span class="val" style="font-weight:800; color:var(--ink);">8 YRS EXP.</span></div>
+    </div>
+
+    <hr class="rule solid">
+
+    <!-- CASE STUDY -->
+    <div class="line">
+      <h2 class="section">FEATURED CASE STUDY</h2>
+      <div class="item-row" style="margin-bottom:2px;">
+        <span class="name" style="font-size:14px;">Dan Store — POS App</span>
+      </div>
+      <p style="font-size:11px; color:var(--ink-soft); margin:0 0 10px;">Live web application, built solo for a real retail business.</p>
+
+      <div class="case-card">
+        <h3>THE PROBLEM</h3>
+        <p>Off-the-shelf POS software meant recurring fees for features a single small store didn't need. I built a lightweight system shaped around exactly how the shop runs day to day, at no recurring cost.</p>
+      </div>
+      <div class="case-card">
+        <h3>THE USERS</h3>
+        <p>Store staff with no technical background, ringing up a sale or checking a customer's balance in seconds — often with the customer standing right there.</p>
+      </div>
+      <div class="case-card">
+        <h3>THE FLOW</h3>
+        <p>Each tab mirrors one step of an actual shift, in the order staff move through it:</p>
+        <div class="flow">
+          <span>POS</span><span class="arrow">→</span>
+          <span>INVENTORY</span><span class="arrow">→</span>
+          <span>SALES</span><span class="arrow">→</span>
+          <span>UNPAID</span><span class="arrow">→</span>
+          <span>BRANCH</span>
+        </div>
+      </div>
+      <div class="case-card">
+        <h3>WHY THIS LAYOUT</h3>
+        <p>Staff shouldn't have to think about where something lives. The tab order follows the physical sequence of serving a customer, so the interface stays out of the way instead of adding a decision.</p>
+      </div>
+
+      <div class="stamp">APPROVED</div><br>
+      <a class="proj-link" href="https://danstore.page.gd/" target="_blank" rel="noopener">VIEW LIVE SITE</a>
+    </div>
+
+    <hr class="rule solid">
+
+    <!-- PROJECT 2 -->
+    <div class="line">
+      <h2 class="section">ALSO RUNG UP</h2>
+      <div class="item-row"><span class="name" style="font-size:13px;">Ironwear</span><span class="qty">Final Project</span></div>
+      <p style="font-size:11.5px; line-height:1.6; margin:6px 0 0;">Built as the final project for my Programming course at IES Villablanca — database structure, interface design, and backend logic in PHP.</p>
+      <a class="proj-link" href="https://ironwear.free.nf/welcome.php" target="_blank" rel="noopener">VIEW LIVE SITE</a>
+    </div>
+
+    <hr class="rule solid">
+
+    <!-- EXPERIENCE -->
+    <div class="line">
+      <h2 class="section">WORK HISTORY</h2>
+      <div class="job">
+        <div class="role">Store Manager</div>
+        <div class="org">M. C. Agulto Enterprises · 2018–2024</div>
+        <ul>
+          <li>Designed and optimized end-to-end operational processes</li>
+          <li>Led data-driven marketing campaigns</li>
+          <li>Trained and supervised service teams</li>
+        </ul>
+      </div>
+      <div class="job">
+        <div class="role">University IT Lecturer</div>
+        <div class="org">Tarlac State University · 2016–2017</div>
+        <ul>
+          <li>Taught IT fundamentals and database theory</li>
+          <li>Designed structured curricula and materials</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="rule solid">
+
+    <!-- EDUCATION -->
+    <div class="line">
+      <h2 class="section">EDUCATION</h2>
+      <div class="item-row"><span class="name">Web App Development (DAW)</span><span class="val">In progress</span></div>
+      <div class="item-row"><span class="name">B.S. Information Technology</span><span class="val">2012–2016</span></div>
+    </div>
+
+    <hr class="rule solid">
+
+    <!-- FOOTER -->
+    <div class="line">
+      <div class="total-row"><span>TOTAL</span><span>1 HIRE-READY DESIGNER</span></div>
+      <div class="meta-row"><span>PAYMENT METHOD</span><span>OPPORTUNITY</span></div>
+      <div class="barcode" id="barcode"></div>
+      <p class="thankyou">THANK YOU FOR VISITING</p>
+      <p class="footer-note">Tagalog — Native · English — Fluent · Spanish — B1<br>Madrid, Spain · Work permit holder</p>
+
+      <div class="cta-row">
+        <a class="proj-link" href="mailto:danielagultolim@gmail.com">EMAIL ME</a>
+        <a class="proj-link" href="https://danstore.page.gd/" target="_blank" rel="noopener">DAN STORE</a>
+        <a class="proj-link" href="https://ironwear.free.nf/welcome.php" target="_blank" rel="noopener">IRONWEAR</a>
+      </div>
+    </div>
+
+  </div>
+  <div class="zig-bot"></div>
+</div>
+
+<script>
+  // date stamp
+  document.getElementById('today').textContent = new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'2-digit', year:'numeric' });
+
+  // barcode
+  const bc = document.getElementById('barcode');
+  for(let i=0;i<46;i++){
+    const bar = document.createElement('div');
+    const w = [2,2,3,2,4,2,3][i % 7];
+    const h = 20 + ((i*37) % 26);
+    bar.style.width = w + 'px';
+    bar.style.height = h + 'px';
+    bc.appendChild(bar);
+  }
+
+  // scroll reveal
+  const lines = document.querySelectorAll('.line');
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('show');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold:0.15 });
+  lines.forEach(l=>obs.observe(l));
+</script>
+
+</body>
+</html>
